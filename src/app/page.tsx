@@ -75,7 +75,7 @@ export default function Home() {
       {clicks.map((click, index) => (
         <div
           key={index}
-          className={`absolute font-bold rounded-full w-8 h-8 flex items-center justify-center ${selectedNumbers.includes(click.number)
+          className={`absolute font-bold rounded-full size-12 flex items-center justify-center ${selectedNumbers.includes(click.number)
             ? 'bg-pink-500 text-white'
             : 'bg-blue-500 text-white'
             }`}
@@ -85,32 +85,47 @@ export default function Home() {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          {click.number}
+          <span className="relative flex size-12">
+            <span
+              className={`absolute inline-flex h-full w-full rounded-full opacity-75 ${selectedNumbers.includes(click.number)
+                ? 'bg-pink-500 animate-ping'
+                : 'bg-blue-500'
+                }`}
+            />
+            <span 
+            className={`relative size-12 rounded-full text-white flex items-center justify-center ${selectedNumbers.includes(click.number)
+              ? 'bg-pink-500'
+              : 'bg-blue-500'
+              }`}
+            >
+              {click.number}
+            </span>
+          </span>
         </div>
       ))}
 
       <div className="flex items-center justify-between absolute right-0 bottom-6 w-full px-4">
         <button
           id="reset-button"
-          className="bg-gray-300 p-2 rounded-full cursor-pointer"
+          className="bg-gray-300 p-2 size-10 flex items-center justify-center rounded-full cursor-pointer"
           onClick={resetClicks}
         >
-          <TbReload />
+          <TbReload size={20} />
         </button>
 
         <button
           id="play-button"
-          className="bg-gray-300 p-2 rounded-full cursor-pointer"
+          className="bg-gray-300 p-2 size-10 flex items-center justify-center rounded-full cursor-pointer"
           onClick={playGame}
         >
-          <IoPlayOutline />
+          <IoPlayOutline size={20} />
         </button>
 
         <div id="config-drawer" className="">
           <Drawer.Root open={isDrawerOpen} onOpenChange={(open) => setIsDrawerOpen(open)}>
             <Drawer.Trigger className="focus:outline-none focus-within:outline-none">
-              <div className='bg-gray-300 p-2 rounded-full cursor-pointer'>
-                <HiDotsHorizontal />
+              <div className='bg-gray-300 p-2 size-10 flex items-center justify-center rounded-full cursor-pointer'>
+                <HiDotsHorizontal size={20} />
               </div>
             </Drawer.Trigger>
             <Drawer.Portal>
@@ -130,7 +145,7 @@ export default function Home() {
                           key={num}
                           onClick={() => setNumberOfPlayers(num)}
                           className={`
-                            w-8 h-8 rounded-md flex items-center justify-center cursor-pointer
+                            size-10 rounded-md flex items-center justify-center cursor-pointer
                             ${numberOfPlayers === num ? 'bg-blue-500 text-white' : 'bg-gray-100'}
                         `}
                         >
