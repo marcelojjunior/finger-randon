@@ -1,6 +1,5 @@
 'use client';
 
-import ConfigDrawer from "@/components/ConfigDrawer";
 import { useEffect, useState } from "react";
 import { Drawer } from 'vaul';
 import { IoPlayOutline } from "react-icons/io5";
@@ -8,6 +7,8 @@ import { TbReload } from "react-icons/tb";
 import { HiDotsHorizontal } from "react-icons/hi";
 import Ball from "@/Icons/Ball";
 import bgVolleyball from "@/assets/images/background.png";
+import ballIcon from "@/assets/images/ball.svg";
+import Image from "next/image";
 
 type Click = {
   x: number;
@@ -113,7 +114,7 @@ export default function Home() {
               }`}
             >
               {/* {click.number} */}
-              <Ball />
+              <Image src={ballIcon} alt="ball" width={45} height={45} />
             </span>
           </span>
         </div>
