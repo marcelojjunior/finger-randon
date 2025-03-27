@@ -6,11 +6,22 @@ import { Drawer } from 'vaul';
 import { IoPlayOutline } from "react-icons/io5";
 import { TbReload } from "react-icons/tb";
 import { HiDotsHorizontal } from "react-icons/hi";
+import Ball from "@/Icons/Ball";
+import bgVolleyball from "@/assets/images/background.png";
 
 type Click = {
   x: number;
   y: number;
   number: number;
+};
+
+const colorMap: { [key: number]: string } = {
+  1: 'bg-blue-500',    // Azul
+  2: 'bg-green-500',   // Verde
+  3: 'bg-red-500',     // Vermelho
+  4: 'bg-orange-500',       // Laranja
+  5: 'bg-purple-500',  // Roxo
+  6: 'bg-yellow-500',  // Amarelo
 };
 
 export default function Home() {
@@ -69,15 +80,18 @@ export default function Home() {
 
   return (
     <div
-      className="h-dvh w-full bg-gray-600 relative"
+      style={{
+        backgroundImage: `url(${bgVolleyball.src})`,
+      }}
+      className="h-dvh w-full bg-gray-600 relative bg-cover bg-center"
       onClick={handleClick}
     >
       {clicks.map((click, index) => (
         <div
           key={index}
-          className={`absolute font-bold rounded-full size-12 flex items-center justify-center ${selectedNumbers.includes(click.number)
-            ? 'bg-pink-500 text-white'
-            : 'bg-blue-500 text-white'
+          className={`absolute font-bold rounded-full size-12 flex items-center justify-center transition-all ${selectedNumbers.includes(click.number)
+            ? 'scale-125'
+            : ''
             }`}
           style={{
             left: click.x,
@@ -87,18 +101,19 @@ export default function Home() {
         >
           <span className="relative flex size-12">
             <span
-              className={`absolute inline-flex h-full w-full rounded-full opacity-75 ${selectedNumbers.includes(click.number)
-                ? 'bg-pink-500 animate-ping'
-                : 'bg-blue-500'
+              className={`absolute inline-flex h-full w-full rounded-full opacity-75 transition-all ${selectedNumbers.includes(click.number)
+                ? `${colorMap[click.number]} animate-ping scale-125`
+                : colorMap[click.number]
                 }`}
             />
-            <span 
-            className={`relative size-12 rounded-full text-white flex items-center justify-center ${selectedNumbers.includes(click.number)
-              ? 'bg-pink-500'
-              : 'bg-blue-500'
+            <span
+            className={`relative size-12 rounded-full text-white flex items-center transition-all justify-center ${selectedNumbers.includes(click.number)
+              ? `${colorMap[click.number]} text-white scale-125`
+              : colorMap[click.number]
               }`}
             >
-              {click.number}
+              {/* {click.number} */}
+              <Ball />
             </span>
           </span>
         </div>
@@ -137,10 +152,10 @@ export default function Home() {
                 <div className="p-4 bg-gray-200 flex flex-col items-end">
                   <div className='w-full flex flex-col items-center justify-between gap-2 pb-6'>
                     <span>
-                      Quantos jogadores vão entrar?
+                      Quantas jogadoras vão entrar?
                     </span>
                     <div className='flex gap-2 bg-white rounded-md p-2'>
-                      {[1, 2, 3, 4, 5, 6].map((num) => (
+                      {[1, 2, 3, 4, 5].map((num) => (
                         <button
                           key={num}
                           onClick={() => setNumberOfPlayers(num)}
