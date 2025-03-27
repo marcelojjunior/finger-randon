@@ -5,7 +5,6 @@ import { Drawer } from 'vaul';
 import { IoPlayOutline } from "react-icons/io5";
 import { TbReload } from "react-icons/tb";
 import { HiDotsHorizontal } from "react-icons/hi";
-import Ball from "@/Icons/Ball";
 import bgVolleyball from "@/assets/images/background.png";
 import ballIcon from "@/assets/images/ball.svg";
 import Image from "next/image";
@@ -24,6 +23,16 @@ const colorMap: { [key: number]: string } = {
   5: 'bg-purple-500',  // Roxo
   6: 'bg-yellow-500',  // Amarelo
 };
+
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+};
+
 
 export default function Home() {
   const [numberOfPlayers, setNumberOfPlayers] = useState<number>(1);
@@ -63,14 +72,14 @@ export default function Home() {
   };
 
   const playGame = () => {
-    if (clicks.length < numberOfPlayers) {
+    if (clicks.length <= numberOfPlayers) {
       alert('Número de cliques insuficiente para a quantidade de jogadores.');
       return;
     }
 
     const numbers = clicks.map((click) => click.number);
-    const shuffled = numbers.sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, numberOfPlayers);
+    const shuffled = shuffleArray(numbers);
+    const selected = shuffled.slice(0, clicks.length - numberOfPlayers);
 
     setSelectedNumbers(selected);
   };
