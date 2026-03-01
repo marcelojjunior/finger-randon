@@ -24,10 +24,31 @@ const colorMap: { [key: number]: string } = {
   6: 'bg-yellow-500',  // Amarelo
 };
 
+/**
+ * Gera um inteiro aleatório no intervalo [0, max] (inclusive) usando
+ * crypto.getRandomValues(), com distribuição uniforme e sem viés
+ * (rejeição quando o range não é potência de 2).
+ */
+function getSecureRandomInt(max: number): number {
+  if (max <= 0) return 0;
+  const range = max + 1;
+  const randomBytes = new Uint32Array(1);
+  const threshold = 0x100000000 - (0x100000000 % range);
+  do {
+    crypto.getRandomValues(randomBytes);
+  } while (randomBytes[0] >= threshold);
+  return randomBytes[0] % range;
+}
+
+/**
+ * Embaralha o array usando Fisher-Yates com números aleatórios
+ * criptograficamente seguros (crypto.getRandomValues), garantindo
+ * que cada permutação tenha a mesma probabilidade.
+ */
 const shuffleArray = <T,>(array: T[]): T[] => {
   const result = [...array];
   for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = getSecureRandomInt(i);
     [result[i], result[j]] = [result[j], result[i]];
   }
   return result;
